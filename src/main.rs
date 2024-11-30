@@ -96,7 +96,9 @@ fn update_display(terminal: &mut DefaultTerminal, display_data: &[bool]) -> io::
             text.push_str("\n");
         }
         let block = Paragraph::new(text)
-            .block(Block::default().title("================= CHIP-8 Emulator ================="));
+            .block(Block::default().title(
+                "============= CHIP-8 Emulator (Press ESC to Exit) ==============="
+            ));
         frame.render_widget(block, frame.area());
     })?;
     Ok(())
