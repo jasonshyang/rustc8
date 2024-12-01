@@ -1,19 +1,12 @@
-#![allow(dead_code)]
-#![allow(unused_imports)]
-use rand::rngs::mock;
 use ratatui::{
-    crossterm::{
-        event::{self, Event, KeyCode, KeyEventKind},
-        terminal,
-    },
-    style::Stylize,
+    crossterm::event::{self, Event, KeyCode, KeyEventKind},
     widgets::{Block, Paragraph},
     DefaultTerminal,
 };
 use std::{
+    env::args,
     io, path,
     time::{Duration, Instant},
-    env::args,
 };
 
 mod chip8;
@@ -95,10 +88,10 @@ fn update_display(terminal: &mut DefaultTerminal, display_data: &[bool]) -> io::
             }
             text.push_str("\n");
         }
-        let block = Paragraph::new(text)
-            .block(Block::default().title(
-                "============= CHIP-8 Emulator (Press ESC to Exit) ==============="
-            ));
+        let block = Paragraph::new(text).block(
+            Block::default()
+                .title("============= CHIP-8 Emulator (Press ESC to Exit) ==============="),
+        );
         frame.render_widget(block, frame.area());
     })?;
     Ok(())

@@ -166,10 +166,6 @@ impl Chip8 {
         self.keyboard[key as usize] = true;
     }
 
-    pub fn clear_key(&mut self, key: u8) {
-        self.keyboard[key as usize] = false;
-    }
-
     pub fn reset_all_keys(&mut self) {
         for i in 0..KEYBOARD_SIZE {
             self.keyboard[i] = false;
@@ -198,7 +194,6 @@ impl Chip8 {
         // y - A 4-bit value, the upper 4 bits of the low byte of the instruction
         // kk or byte - An 8-bit value, the lowest 8 bits of the instruction
         // nnn or addr - A 12-bit value, the lowest 12 bits of the instruction
-        // nn - An 8-bit value, the lowest 8 bits of the instruction
         // n / nibble - A 4-bit value, the lowest 4 bits of the instruction
         // Explanation of the bitwise operations:
         // >> 8 performs right shift by 8 bits
