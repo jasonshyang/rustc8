@@ -32,14 +32,13 @@ fn run(mut terminal: DefaultTerminal, path: &str) -> io::Result<()> {
     let rom = read_rom(path);
     chip8.load_rom(&rom);
 
-    let cycle_rate = Duration::from_micros(1000 / 60);
     let refresh_rate = Duration::from_millis(1000 / 60);
     let mut last_cycle = Instant::now();
     let mut last_refresh = Instant::now();
 
     // main loop
     loop {
-        if last_cycle.elapsed() >= cycle_rate {
+        if last_cycle.elapsed() >= refresh_rate {
             chip8.run_cycle();
             last_cycle = Instant::now();
         }
