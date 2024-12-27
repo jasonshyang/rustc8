@@ -32,22 +32,20 @@ fn run(mut terminal: DefaultTerminal, path: &str) -> io::Result<()> {
     let rom = read_rom(path);
     chip8.load_rom(&rom);
 
-    let refresh_rate = Duration::from_millis(1000 / 60);
+    let cycle_rate = Duration::from_micros(2000);
     let mut last_cycle = Instant::now();
-    let mut last_refresh = Instant::now();
 
     // main loop
     loop {
-        if last_cycle.elapsed() >= refresh_rate {
+        if last_cycle.elapsed() >= cycle_rate {
             chip8.run_cycle();
             last_cycle = Instant::now();
         }
 
-        if chip8.is_drawing && last_refresh.elapsed() >= refresh_rate {
+        if chip8.is_drawing {
             let display_data = chip8.get_display_data();
             update_display(&mut terminal, &display_data).unwrap();
             chip8.is_drawing = false;
-            last_refresh = Instant::now();
         }
 
         if event::poll(Duration::from_millis(1))? {
